@@ -9,7 +9,7 @@ def test_session_storage_auth():
 
         driver.add_cookie({
             "name": "SESSION",
-            "value": "SESSION_USER_1_PLACEHOLDER",
+            "value": "ZDk0NjBjZDItYzM5ZS00ZDk0LWE5MTktZDkwNDZkNzVlNTVl",
             "domain": "gitflic.ru",
             "path": "/"
         })
@@ -26,7 +26,7 @@ def test_session_storage_auth():
         
         driver.add_cookie({
             "name": "SESSION",
-            "value": "SESSION_USER_2_PLACEHOLDER",
+            "value": "MDc1NzRhMzQtMjc1Ny00M2U5LTkzMmQtZDMyYmMyNGU5MThk",
             "domain": "gitflic.ru",
             "path": "/"
         })
@@ -44,7 +44,6 @@ def test_session_storage_auth():
 
     finally:
         driver.quit()
-
-
+        
 if __name__ == "__main__":
     test_session_storage_auth()
