@@ -2,6 +2,7 @@ import pytest
 from conftest import get_db, engine
 from models import Student, Base
 
+
 @pytest.fixture(scope="function")
 def db_session():
     Base.metadata.create_all(bind=engine)
@@ -45,7 +46,9 @@ def test_update_student(db_session):
     student.level = "Advanced"
     db_session.commit()
 
-    updated = db_session.query(Student).filter(Student.user_id == student_id).first()
+    updated = db_session.query(Student).filter(
+        Student.user_id == student_id
+        ).first()
     assert updated is not None
     assert updated.level == "Advanced"
 
