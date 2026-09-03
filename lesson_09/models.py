@@ -6,7 +6,6 @@ Base = declarative_base()
 class Student(Base):
     __tablename__ = 'student'
 
-    # ВАЖНО: autoincrement=True обязателен здесь
     user_id = Column(Integer, primary_key=True, autoincrement=True)
     
     level = Column(String)
