@@ -46,9 +46,11 @@ def test_update_student(db_session):
     student.level = "Advanced"
     db_session.commit()
 
-    updated = db_session.query(Student).filter(
-        Student.user_id == student_id
-        ).first()
+    updated = (
+        db_session.query(Student)
+        .filter(Student.user_id == student_id)
+        .first()
+    )
     assert updated is not None
     assert updated.level == "Advanced"
 
@@ -67,5 +69,9 @@ def test_delete_student(db_session):
     db_session.delete(student)
     db_session.commit()
 
-    deleted = db_session.query(Student).filter(Student.user_id == user_id).first()
+    deleted = (
+        db_session.query(Student)
+        .filter(Student.user_id == user_id)
+        .first()
+    )
     assert deleted is None
