@@ -9,13 +9,13 @@ def pytest_addoption(parser):
         "--browser",
         action="store",
         default="chrome",
-        help="Браузер для запуска: chrome, firefox или edge",
+        help="Браузер: chrome, firefox или edge",
     )
 
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
-    """Прикрепляет скриншот к отчёту Allure, если тест упал."""
+    """Прикрепляет скриншот к отчёту Allure при падении."""
     outcome = yield
     rep = outcome.get_result()
     if rep.when == "call" and rep.failed:

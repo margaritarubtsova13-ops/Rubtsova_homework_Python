@@ -14,7 +14,7 @@ class CheckoutPage:
         :type driver: selenium.webdriver.remote.webdriver.WebDriver
         """
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 30)
 
     def fill_form(
         self,
@@ -35,19 +35,25 @@ class CheckoutPage:
         :rtype: CheckoutPage
         """
         fn = self.wait.until(
-            EC.presence_of_element_located((By.ID, "first-name"))
+            EC.presence_of_element_located(
+                (By.ID, "first-name")
+            )
         )
         fn.clear()
         fn.send_keys(first_name)
 
         ln = self.wait.until(
-            EC.presence_of_element_located((By.ID, "last-name"))
+            EC.presence_of_element_located(
+                (By.ID, "last-name")
+            )
         )
         ln.clear()
         ln.send_keys(last_name)
 
         pc = self.wait.until(
-            EC.presence_of_element_located((By.ID, "postal-code"))
+            EC.presence_of_element_located(
+                (By.ID, "postal-code")
+            )
         )
         pc.clear()
         pc.send_keys(postal_code)

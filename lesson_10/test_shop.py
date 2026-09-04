@@ -10,9 +10,9 @@ from lesson_10.pages.checkout_page import CheckoutPage
     "и проверка итоговой суммы"
 )
 @allure.description(
-    "Проверяется полный сценарий оформления заказа: авторизация, "
-    "добавление трёх товаров, переход в корзину, заполнение формы "
-    "и проверка итоговой стоимости."
+    "Проверяется полный сценарий оформления заказа: "
+    "авторизация, добавление трёх товаров, переход "
+    "в корзину, заполнение формы и проверка суммы."
 )
 @allure.feature("Оформление заказа")
 @allure.severity(allure.severity_level.CRITICAL)
@@ -33,20 +33,29 @@ def test_shop_checkout(driver):
         "Sauce Labs Bolt T-Shirt",
         "Sauce Labs Onesie",
     ]
-    with allure.step(f"Добавляем товары в корзину: {', '.join(items)}"):
+    with allure.step(
+        f"Добавляем товары: {', '.join(items)}"
+    ):
         for item in items:
             inventory_page.add_item_by_name(item)
 
-    with allure.step("Переходим в корзину и нажимаем «Оформить заказ»"):
+    with allure.step(
+        "Переходим в корзину и нажимаем «Оформить»"
+    ):
         inventory_page.go_to_cart()
         cart_page.click_checkout()
 
-    with allure.step("Заполняем форму оформления заказа"):
-        checkout_page.fill_form("Иван", "Петров", "123456")
+    with allure.step("Заполняем форму заказа"):
+        checkout_page.fill_form("Иван", "Иванов", "123456")
+
+    with allure.step("Нажимаем «Продолжить»"):
         checkout_page.click_continue()
 
-    with allure.step("Проверяем итоговую сумму заказа"):
+    with allure.step("Получаем итоговую сумму"):
         total = checkout_page.get_total()
-        assert "$58.29" in total, (
-            f"Ожидалась сумма $58.29, но получено: {total}"
+
+    with allure.step("Проверяем итоговую сумму"):
+        assert "58.29" in total, (
+            f"Ожидалась сумма '58.29', "
+            f"но получено: '{total}'"
         )

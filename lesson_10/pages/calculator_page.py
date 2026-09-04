@@ -67,13 +67,17 @@ class CalculatorPage:
     def get_result(self) -> str:
         """
         Получает текст результата из экрана калькулятора.
+        Ожидает завершения вычисления — пока с экрана
+        не исчезнет символ операции.
 
         :return: Текст результата (очищенный от лишних пробелов).
         :rtype: str
         """
-        screen = self.wait.until(
-            EC.presence_of_element_located(
-                (By.CLASS_NAME, "screen")
-            )
+        screen = self.driver.find_element(
+            By.CLASS_NAME, "screen"
+        )
+        self.wait.until(
+            lambda d: screen.text.strip() != ""
+            and "+" not in screen.text
         )
         return screen.text.strip()

@@ -1,18 +1,20 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options as ChromeOptions
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.webdriver.edge.options import Options as EdgeOptions
+from selenium.webdriver.chrome.options import Options
 
-def create_driver(browser: str):
-    browser = browser.lower()
-    if browser == "chrome":
-        options = ChromeOptions()
-        return webdriver.Chrome(options=options)
-    elif browser == "firefox":
-        options = FirefoxOptions()
-        return webdriver.Firefox(options=options)
-    elif browser == "edge":
-        options = EdgeOptions()
-        return webdriver.Edge(options=options)
+
+def create_driver(browser_name):
+    """Создает и возвращает экземпляр драйвера."""
+    if browser_name.lower() == "firefox":
+        return webdriver.Firefox()
+    elif browser_name.lower() == "edge":
+        return webdriver.Edge()
     else:
-        raise ValueError(f"Неизвестный браузер: {browser}")
+        options = Options()
+        prefs = {
+            "credentials_enable_service": False,
+            "profile.password_manager_enabled": False,
+            "profile.password_manager_leak_detection": False,
+        }
+        options.add_experimental_option("prefs", prefs)
+        options.add_argument("--disable-notifications")
+        return webdriver.Chrome(options=options)

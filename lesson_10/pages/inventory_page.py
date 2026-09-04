@@ -14,18 +14,22 @@ class InventoryPage:
         :type driver: selenium.webdriver.remote.webdriver.WebDriver
         """
         self.driver = driver
-        self.wait = WebDriverWait(driver, 10)
+        self.wait = WebDriverWait(driver, 30)
 
     def add_item_by_name(self, item_name: str) -> "InventoryPage":
         """
         Добавляет товар в корзину по имени.
 
-        :param item_name: Название товара (например, «Sauce Labs Backpack»).
+        :param item_name: Название товара
+            (например, «Sauce Labs Backpack»).
         :type item_name: str
         :return: Текущий экземпляр страницы.
         :rtype: InventoryPage
         """
-        item_id = "add-to-cart-" + item_name.lower().replace(" ", "-")
+        item_id = (
+            "add-to-cart-"
+            + item_name.lower().replace(" ", "-")
+        )
         button = self.wait.until(
             EC.element_to_be_clickable((By.ID, item_id))
         )
@@ -34,15 +38,16 @@ class InventoryPage:
 
     def go_to_cart(self) -> "InventoryPage":
         """
-        Переходит в корзину.
+        Переходит в корзину и дожидается загрузки страницы.
 
         :return: Текущий экземпляр страницы.
         :rtype: InventoryPage
         """
         cart_link = self.wait.until(
             EC.element_to_be_clickable(
-                (By.CSS_SELECTOR, ".shopping_cart_container a")
+                (By.CLASS_NAME, "shopping_cart_link")
             )
         )
         cart_link.click()
+        self.wait.until(EC.url_contains("cart"))
         return self

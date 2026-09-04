@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class LoginPage:
     """Страница авторизации в демо-магазине."""
+
     URL = "https://www.saucedemo.com/"
 
     def __init__(self, driver) -> None:
@@ -37,7 +38,9 @@ class LoginPage:
         :rtype: LoginPage
         """
         field = self.wait.until(
-            EC.presence_of_element_located((By.ID, "user-name"))
+            EC.presence_of_element_located(
+                (By.ID, "user-name")
+            )
         )
         field.clear()
         field.send_keys(username)
@@ -53,7 +56,9 @@ class LoginPage:
         :rtype: LoginPage
         """
         field = self.wait.until(
-            EC.presence_of_element_located((By.ID, "password"))
+            EC.presence_of_element_located(
+                (By.ID, "password")
+            )
         )
         field.clear()
         field.send_keys(password)
@@ -67,7 +72,9 @@ class LoginPage:
         :rtype: LoginPage
         """
         button = self.wait.until(
-            EC.element_to_be_clickable((By.ID, "login-button"))
+            EC.element_to_be_clickable(
+                (By.ID, "login-button")
+            )
         )
         button.click()
         return self
